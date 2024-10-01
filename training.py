@@ -10,10 +10,8 @@ import matplotlib.pyplot as plt
 train_data_dir = 'dataset/train'
 validation_data_dir = 'dataset/validation'
 
-# Create data generators with not  simplified augmentations
+# Create data generators
 train_datagen = ImageDataGenerator(rescale=1.0/255.0)
-
-
 validation_datagen = ImageDataGenerator(rescale=1.0/255.0)
 
 train_generator = train_datagen.flow_from_directory(
@@ -55,7 +53,7 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Train the model for fewer epochs
 history = model.fit(
     train_generator,
-    steps_per_epoch=100// train_generator.batch_size,
+    steps_per_epoch=100 // train_generator.batch_size,
     validation_data=validation_generator,
     validation_steps=50 // validation_generator.batch_size,
     epochs=3  # Reduced epochs to 3
@@ -66,6 +64,9 @@ score = model.evaluate(validation_generator)
 print(f'Validation loss: {score[0]}')
 print(f'Validation accuracy: {score[1]}')
 
+# Save the trained model
+model.save('light_exported_mobilenetv2_model')  # Save in TensorFlow's SavedModel format
+# model.save('exported_mobilenetv2_model.h5')  # Alternatively, save in HDF5 format
 
 # Load and preprocess a new remote sensing image
 img_path = 'file.jpg'

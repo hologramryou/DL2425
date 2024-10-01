@@ -27,7 +27,7 @@ validation_datagen = ImageDataGenerator(rescale=1.0/255.0)
 train_generator = train_datagen.flow_from_directory(
     train_data_dir,
     target_size=(224, 224),
-    batch_size=16,  # Reduced batch size for faster training steps
+    batch_size=16,
     class_mode='categorical'
 )
 
@@ -74,8 +74,13 @@ score = model.evaluate(validation_generator)
 print(f'Validation loss: {score[0]}')
 print(f'Validation accuracy: {score[1]}')
 
+# Save the model in TensorFlow SavedModel format
+model.save('my_mobilenetv2_model')
 
-# Load and preprocess a new remote sensing image
+# Alternatively, you can save it in HDF5 format
+# model.save('my_mobilenetv2_model.h5')
+
+# Load and preprocess a new image for prediction
 img_path = '.jpg'
 img = tf.keras.preprocessing.image.load_img(img_path, target_size=(224, 224))
 img_array = tf.keras.preprocessing.image.img_to_array(img) / 255.0
