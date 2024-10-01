@@ -53,10 +53,10 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Train the model for fewer epochs
 history = model.fit(
     train_generator,
-    steps_per_epoch=100 // train_generator.batch_size,
+    steps_per_epoch=500 // train_generator.batch_size,
     validation_data=validation_generator,
-    validation_steps=50 // validation_generator.batch_size,
-    epochs=3  # Reduced epochs to 3
+    validation_steps=250 // validation_generator.batch_size,
+    epochs=10  # Reduced epochs to 3
 )
 
 # Evaluate the model
