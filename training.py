@@ -65,8 +65,8 @@ print(f'Validation loss: {score[0]}')
 print(f'Validation accuracy: {score[1]}')
 
 # Save the trained model
-model.save('light_exported_mobilenetv2_model')  # Save in TensorFlow's SavedModel format
-# model.save('exported_mobilenetv2_model.h5')  # Alternatively, save in HDF5 format
+##model.save('light_exported_mobilenetv2_model')  # Save in TensorFlow's SavedModel format
+model.save('light_exported_mobilenetv2_model.h5')  # Alternatively, save in HDF5 format
 
 # Load and preprocess a new remote sensing image
 img_path = 'file.jpg'
