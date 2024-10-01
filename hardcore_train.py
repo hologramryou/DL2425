@@ -10,9 +10,17 @@ import matplotlib.pyplot as plt
 train_data_dir = 'dataset/train'
 validation_data_dir = 'dataset/validation'
 
-# Create data generators with not  simplified augmentations
-train_datagen = ImageDataGenerator(rescale=1.0/255.0)
-
+# Create data generators
+train_datagen = ImageDataGenerator(
+    rescale=1.0/255.0,
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest'
+)
 
 validation_datagen = ImageDataGenerator(rescale=1.0/255.0)
 
@@ -39,7 +47,7 @@ base_model = MobileNetV2(weights=local_weights_path, include_top=False)
 # Add custom layers on top
 x = base_model.output
 x = GlobalAveragePooling2D()(x)
-x = Dense(512, activation='relu')(x)  # Reduced dense layer size to 512
+x = Dense(1024, activation='relu')(x)
 predictions = Dense(train_generator.num_classes, activation='softmax')(x)
 
 # Create the model
@@ -55,10 +63,10 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 # Train the model for fewer epochs
 history = model.fit(
     train_generator,
-    steps_per_epoch=100// train_generator.batch_size,
+    steps_per_epoch=train_generator.samples // train_generator.batch_size,
     validation_data=validation_generator,
-    validation_steps=50 // validation_generator.batch_size,
-    epochs=3  # Reduced epochs to 3
+    validation_steps=validation_generator.samples // validation_generator.batch_size,
+    epochs=10
 )
 
 # Evaluate the model
@@ -68,7 +76,7 @@ print(f'Validation accuracy: {score[1]}')
 
 
 # Load and preprocess a new remote sensing image
-img_path = 'file.jpg'
+img_path = '.jpg'
 img = tf.keras.preprocessing.image.load_img(img_path, target_size=(224, 224))
 img_array = tf.keras.preprocessing.image.img_to_array(img) / 255.0
 img_array = np.expand_dims(img_array, axis=0)
