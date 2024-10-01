@@ -9,3 +9,5 @@ Step 3: Run the training file, it will export the model that you can use for lon
 Step 4: Change the path of the image and model, then run
 
 Step 5: Voila, You have got the prediction of the image you choose
+
+Documents: https://docs.google.com/document/d/10M3xMqGFCoqDD_sgbHdI3ZUK7Lu8en-GBWguNJU_TgY/edit?usp=sharing
