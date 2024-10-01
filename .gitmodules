@@ -1,0 +1,3 @@
+[submodule "EuroSAT"]
+	path = EuroSAT
+	url = https://github.com/phelber/EuroSAT.git
